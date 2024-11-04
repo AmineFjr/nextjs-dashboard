@@ -1,4 +1,4 @@
-import MoneLogo from '@/app/ui/acme-logo';
+import MoneLogo from '@/app/ui/mone-logo';
 import LoginForm from '@/app/ui/login-form';
 
 export default function LoginPage() {
