@@ -7,11 +7,20 @@ import { redirect } from 'next/navigation';
 import { signIn } from '@/auth';
 import { AuthError } from 'next-auth';
 
-export type State = {
+export type InvoiceState = {
     errors?: {
         customerId?: string[];
         amount?: string[];
         status?: string[];
+    };
+    message?: string | null;
+};
+
+export type CustomerState = {
+    errors?: {
+        name?: string[] | null;
+        email?: string[] | null;
+        image?: string[] | null;
     };
     message?: string | null;
 };
@@ -44,7 +53,7 @@ const CustomerFormSchema = z.object({
 
 const CreateInvoice = InvoiceFormSchema.omit({ id: true, date: true });
 
-export async function createInvoice(prevState: State, formData: FormData) {
+export async function createInvoice(prevState: InvoiceState, formData: FormData) {
     // Validate form using Zod
     const validatedFields = CreateInvoice.safeParse({
         customerId: formData.get('customerId'),
@@ -87,7 +96,7 @@ const UpdateInvoice = InvoiceFormSchema.omit({ id: true});
 
 export async function updateInvoice(
     id: string,
-    prevState: State,
+    prevState: InvoiceState,
     formData: FormData,
 ) {
     const validatedFields = UpdateInvoice.safeParse({
@@ -132,7 +141,7 @@ export async function deleteInvoice(id: string) {
 
 const CreateCustomer = CustomerFormSchema.omit({ id: true });
 
-export async function createCustomer(prevState: State, formData: FormData) {
+export async function createCustomer(prevState: CustomerState, formData: FormData) {
     const validatedFields = CreateCustomer.safeParse({
         name: formData.get('name'),
         email: formData.get('email'),
@@ -165,7 +174,7 @@ const UpdateCustomer = CustomerFormSchema.omit({ id: true });
 
 export async function updateCustomer(
     id: string,
-    prevState: State,
+    prevState: CustomerState,
     formData: FormData,
 ) {
     const validatedFields = UpdateCustomer.safeParse({

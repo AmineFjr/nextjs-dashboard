@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { Button } from '@/app/ui/button';
-import { State, updateCustomer } from '@/app/lib/actions';
+import { CustomerState, updateCustomer } from '@/app/lib/actions';
 import React, { useActionState } from 'react';
 import {AtSymbolIcon, PhotoIcon, UserCircleIcon} from '@heroicons/react/24/outline';
 import { CustomerField } from '@/app/lib/definitions';
@@ -12,8 +12,8 @@ export default function EditCustomerForm({
 }: {
     customer: CustomerField;
 }) {
-    const initialState: State = { message: null, errors: {} };
-    const updateCustomerWithId = (state: State, formData: FormData) => updateCustomer(customer.id, state, formData);
+    const initialState: CustomerState = { message: null, errors: {} };
+    const updateCustomerWithId = updateCustomer.bind(null, customer.id);
     const [ , formAction ] = useActionState(updateCustomerWithId, initialState);
 
     return (
