@@ -2,11 +2,10 @@ import {Metadata} from "next";
 import {fetchCustomersPages} from "@/app/lib/data";
 import {lusitana} from "@/app/ui/fonts";
 import Search from "@/app/ui/search";
-import {CreateCustomer} from "@/app/ui/invoices/buttons";
 import {Suspense} from "react";
-import {CustomersTableSkeleton} from "@/app/ui/skeletons";
 import Table from "@/app/ui/customers/table";
 import Pagination from "@/app/ui/customers/pagination";
+import {CreateCustomer} from "@/app/ui/customers/buttons";
 
 export const metadata: Metadata = {
     title: 'Customers',
@@ -33,7 +32,7 @@ export default async function Page(props: {
                 <Search placeholder="Search customers..." />
                 <CreateCustomer />
             </div>
-            <Suspense key={query + currentPage} fallback={<CustomersTableSkeleton />}>
+            <Suspense key={query + currentPage}>
                 <Table query={query} currentPage={currentPage} />
             </Suspense>
             <div className="mt-5 flex w-full justify-center">
